@@ -19,20 +19,20 @@ const Index = () => {
   const calculatePrediction = (data: FormData) => {
     // Mock calculation based on input parameters with variability
     const cropData: { [key: string]: { base: number; variance: number; optimalTemp: [number, number]; optimalHumidity: [number, number] } } = {
-      tomato: { base: 25, variance: 0.15, optimalTemp: [20, 28], optimalHumidity: [60, 80] },
-      cucumber: { base: 30, variance: 0.2, optimalTemp: [22, 26], optimalHumidity: [70, 85] },
-      pepper: { base: 20, variance: 0.18, optimalTemp: [21, 27], optimalHumidity: [60, 75] },
-      lettuce: { base: 15, variance: 0.12, optimalTemp: [15, 22], optimalHumidity: [65, 80] },
-      strawberry: { base: 18, variance: 0.25, optimalTemp: [18, 24], optimalHumidity: [70, 85] },
-      eggplant: { base: 22, variance: 0.2, optimalTemp: [22, 30], optimalHumidity: [60, 75] },
-      zucchini: { base: 28, variance: 0.22, optimalTemp: [20, 28], optimalHumidity: [65, 80] },
-      herbs: { base: 12, variance: 0.1, optimalTemp: [18, 24], optimalHumidity: [60, 70] },
-      spinach: { base: 14, variance: 0.15, optimalTemp: [15, 20], optimalHumidity: [65, 75] },
-      radish: { base: 10, variance: 0.18, optimalTemp: [15, 22], optimalHumidity: [65, 80] },
-      carrot: { base: 16, variance: 0.2, optimalTemp: [16, 24], optimalHumidity: [65, 75] },
-      bean: { base: 13, variance: 0.17, optimalTemp: [18, 26], optimalHumidity: [60, 75] },
-      melon: { base: 35, variance: 0.3, optimalTemp: [24, 32], optimalHumidity: [60, 75] },
-      watermelon: { base: 40, variance: 0.35, optimalTemp: [24, 32], optimalHumidity: [60, 70] },
+      tomato: { base: 25, variance: 0.15, optimalTemp: [20, 30], optimalHumidity: [60, 80] },
+      cucumber: { base: 30, variance: 0.2, optimalTemp: [22, 28], optimalHumidity: [70, 90] },
+      pepper: { base: 20, variance: 0.18, optimalTemp: [23, 29], optimalHumidity: [55, 75] },
+      lettuce: { base: 15, variance: 0.12, optimalTemp: [12, 22], optimalHumidity: [65, 85] },
+      strawberry: { base: 18, variance: 0.25, optimalTemp: [15, 25], optimalHumidity: [70, 85] },
+      eggplant: { base: 22, variance: 0.2, optimalTemp: [24, 32], optimalHumidity: [55, 70] },
+      zucchini: { base: 28, variance: 0.22, optimalTemp: [18, 28], optimalHumidity: [60, 75] },
+      herbs: { base: 12, variance: 0.1, optimalTemp: [16, 24], optimalHumidity: [50, 70] },
+      spinach: { base: 14, variance: 0.15, optimalTemp: [10, 20], optimalHumidity: [60, 75] },
+      radish: { base: 10, variance: 0.18, optimalTemp: [12, 20], optimalHumidity: [65, 80] },
+      carrot: { base: 16, variance: 0.2, optimalTemp: [14, 24], optimalHumidity: [60, 75] },
+      bean: { base: 13, variance: 0.17, optimalTemp: [18, 27], optimalHumidity: [55, 75] },
+      melon: { base: 35, variance: 0.3, optimalTemp: [25, 35], optimalHumidity: [50, 70] },
+      watermelon: { base: 40, variance: 0.35, optimalTemp: [26, 34], optimalHumidity: [55, 65] },
     };
 
     const area = parseFloat(data.area);
