@@ -17,13 +17,22 @@ const Index = () => {
   const [prediction, setPrediction] = useState<any>(null);
 
   const calculatePrediction = (data: FormData) => {
-    // Mock calculation based on input parameters
-    const baseYield: { [key: string]: number } = {
-      tomato: 25,
-      cucumber: 30,
-      pepper: 20,
-      lettuce: 15,
-      strawberry: 18,
+    // Mock calculation based on input parameters with variability
+    const cropData: { [key: string]: { base: number; variance: number; optimalTemp: [number, number]; optimalHumidity: [number, number] } } = {
+      tomato: { base: 25, variance: 0.15, optimalTemp: [20, 28], optimalHumidity: [60, 80] },
+      cucumber: { base: 30, variance: 0.2, optimalTemp: [22, 26], optimalHumidity: [70, 85] },
+      pepper: { base: 20, variance: 0.18, optimalTemp: [21, 27], optimalHumidity: [60, 75] },
+      lettuce: { base: 15, variance: 0.12, optimalTemp: [15, 22], optimalHumidity: [65, 80] },
+      strawberry: { base: 18, variance: 0.25, optimalTemp: [18, 24], optimalHumidity: [70, 85] },
+      eggplant: { base: 22, variance: 0.2, optimalTemp: [22, 30], optimalHumidity: [60, 75] },
+      zucchini: { base: 28, variance: 0.22, optimalTemp: [20, 28], optimalHumidity: [65, 80] },
+      herbs: { base: 12, variance: 0.1, optimalTemp: [18, 24], optimalHumidity: [60, 70] },
+      spinach: { base: 14, variance: 0.15, optimalTemp: [15, 20], optimalHumidity: [65, 75] },
+      radish: { base: 10, variance: 0.18, optimalTemp: [15, 22], optimalHumidity: [65, 80] },
+      carrot: { base: 16, variance: 0.2, optimalTemp: [16, 24], optimalHumidity: [65, 75] },
+      bean: { base: 13, variance: 0.17, optimalTemp: [18, 26], optimalHumidity: [60, 75] },
+      melon: { base: 35, variance: 0.3, optimalTemp: [24, 32], optimalHumidity: [60, 75] },
+      watermelon: { base: 40, variance: 0.35, optimalTemp: [24, 32], optimalHumidity: [60, 70] },
     };
 
     const area = parseFloat(data.area);
@@ -31,13 +40,17 @@ const Index = () => {
     const humidity = parseFloat(data.humidity);
     const lightHours = parseFloat(data.lightHours);
     
+    const crop = cropData[data.cropType] || { base: 20, variance: 0.15, optimalTemp: [20, 28], optimalHumidity: [60, 80] };
+    
     // Calculate yield based on optimal conditions
     let yieldFactor = 1.0;
-    if (temp >= 20 && temp <= 28) yieldFactor *= 1.2;
-    if (humidity >= 60 && humidity <= 80) yieldFactor *= 1.15;
+    if (temp >= crop.optimalTemp[0] && temp <= crop.optimalTemp[1]) yieldFactor *= 1.2;
+    if (humidity >= crop.optimalHumidity[0] && humidity <= crop.optimalHumidity[1]) yieldFactor *= 1.15;
     if (lightHours >= 12 && lightHours <= 16) yieldFactor *= 1.1;
     
-    const yieldPerSqm = (baseYield[data.cropType] || 20) * yieldFactor;
+    // Add variability based on crop type
+    const variabilityFactor = 1 + (Math.random() - 0.5) * crop.variance * 2;
+    const yieldPerSqm = crop.base * yieldFactor * variabilityFactor;
     const totalYield = Math.round(yieldPerSqm * area);
     const qualityScore = Math.min(95, Math.round(yieldFactor * 80));
 
@@ -50,8 +63,10 @@ const Index = () => {
 
     // Generate recommendations
     const recommendations = [];
-    if (temp < 20) recommendations.push("Увеличьте температуру до 20-28°C для оптимального роста");
-    if (humidity < 60) recommendations.push("Повысьте влажность до 60-80% для лучшего развития растений");
+    if (temp < crop.optimalTemp[0]) recommendations.push(`Увеличьте температуру до ${crop.optimalTemp[0]}-${crop.optimalTemp[1]}°C для оптимального роста`);
+    if (temp > crop.optimalTemp[1]) recommendations.push(`Снизьте температуру до ${crop.optimalTemp[0]}-${crop.optimalTemp[1]}°C для предотвращения стресса растений`);
+    if (humidity < crop.optimalHumidity[0]) recommendations.push(`Повысьте влажность до ${crop.optimalHumidity[0]}-${crop.optimalHumidity[1]}% для лучшего развития растений`);
+    if (humidity > crop.optimalHumidity[1]) recommendations.push(`Снизьте влажность до ${crop.optimalHumidity[0]}-${crop.optimalHumidity[1]}% для предотвращения грибковых заболеваний`);
     if (lightHours < 12) recommendations.push("Обеспечьте не менее 12 часов освещения в день");
     if (recommendations.length === 0) {
       recommendations.push("Условия оптимальны! Продолжайте поддерживать текущие параметры");

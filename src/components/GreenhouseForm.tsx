@@ -64,6 +64,15 @@ export const GreenhouseForm = ({ onCalculate }: GreenhouseFormProps) => {
                 <SelectItem value="pepper">Перец</SelectItem>
                 <SelectItem value="lettuce">Салат</SelectItem>
                 <SelectItem value="strawberry">Клубника</SelectItem>
+                <SelectItem value="eggplant">Баклажан</SelectItem>
+                <SelectItem value="zucchini">Кабачок</SelectItem>
+                <SelectItem value="herbs">Зелень (укроп, петрушка)</SelectItem>
+                <SelectItem value="spinach">Шпинат</SelectItem>
+                <SelectItem value="radish">Редис</SelectItem>
+                <SelectItem value="carrot">Морковь</SelectItem>
+                <SelectItem value="bean">Фасоль</SelectItem>
+                <SelectItem value="melon">Дыня</SelectItem>
+                <SelectItem value="watermelon">Арбуз</SelectItem>
               </SelectContent>
             </Select>
           </div>
